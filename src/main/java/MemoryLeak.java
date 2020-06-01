@@ -1,10 +1,21 @@
+/**
+ * Задание заключалось в переполнении Heap
+ * и переполнении Metaspace
+ */
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
 /**
- * -XX:MaxMetaspaceSize=10m
+ * 1. -XX:+UseSerialGC -Xmx100m
+ * 2. -XX:MaxMetaspaceSize=10m
+ * Дабы ускорить утечку по учебному примеру создан цикл,
+ * но еще обернут в parallel stream и
+ * просто открываю потоки, которые не закрываю,
+ * просто ради нагрузки.
  */
 
 public class MemoryLeak {
