@@ -31,12 +31,15 @@ public class MemoryLeak {
         for (int i = 0; i < LOOP; i++) {
             String str = "" + random.nextInt();
             list.add(str);
+            try {
+                useMyClassLoader();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             Stream stream = list.parallelStream();
             stream.map(x -> x + "xx");
             System.out.println(list);
-            Thread thread = new Thread();
-            thread.start();
             if (i % 10 == 0) {
                 Thread.sleep(100);
                 list.remove(0);
@@ -47,4 +50,11 @@ public class MemoryLeak {
     }
 
 
+
+    private static void useMyClassLoader() throws Exception {
+        ClassLoader classLoader = new MyClassLoader();
+        Class<?> kindClass = classLoader.loadClass("Loader");
+        Worker loader = (Worker) kindClass.newInstance();
+        loader.doWork();
+    }
 }
